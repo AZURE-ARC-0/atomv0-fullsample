@@ -1,0 +1,60 @@
+Here's a basic Python code sample for an ATOM Framework type system, called atomv0-sample. This sample code demonstrates a simple task management system that can create, execute, and complete tasks. Please note that this is a minimal example and does not cover all aspects of the ATOM Framework.
+
+python
+
+# atomv0-sample.py
+
+import uuid
+import heapq
+
+# Task Representation
+class Task:
+    def __init__(self, description, priority):
+        self.id = uuid.uuid4()
+        self.description = description
+        self.priority = priority
+
+    def __lt__(self, other):
+        return self.priority < other.priority
+
+    def execute(self):
+        print(f'Executing task: {self.description}')
+
+# Task Corpus Management
+class TaskManager:
+    def __init__(self):
+        self.task_queue = []
+
+    def add_task(self, task):
+        heapq.heappush(self.task_queue, task)
+
+    def execute_next_task(self):
+        if self.task_queue:
+            next_task = heapq.heappop(self.task_queue)
+            next_task.execute()
+        else:
+            print('No tasks to execute.')
+
+# Example usage of atomv0-sample
+if __name__ == "__main__":
+    task_manager = TaskManager()
+
+    task1 = Task("Pay bills", 1)
+    task2 = Task("Do laundry", 3)
+    task3 = Task("Buy groceries", 2)
+
+    task_manager.add_task(task1)
+    task_manager.add_task(task2)
+    task_manager.add_task(task3)
+
+    task_manager.execute_next_task()
+    task_manager.execute_next_task()
+    task_manager.execute_next_task()
+
+In this code sample, we define two classes: Task and TaskManager.
+
+The Task class represents a task and includes a unique identifier, description, and priority. The __lt__ method allows tasks to be compared based on their priority. The execute method simulates executing a task by printing its description.
+
+The TaskManager class manages a task queue using a priority heap to maintain an ordered list of tasks based on priority. The add_task method adds a new task to the queue, and the execute_next_task method executes and removes the highest priority task from the queue.
+
+In the example usage, we create a TaskManager instance and add three tasks with different priorities. Then, we execute the tasks one by one in priority order.

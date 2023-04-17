@@ -1,0 +1,84 @@
+python
+
+# atomv0-fullsample: Heuristic Imperatives Integration
+
+import heapq
+import random
+
+class HeuristicImperatives:
+    def __init__(self):
+        self.imperatives = {
+            "safeguard_humanity": 1.0,
+            "embrace_empathy": 0.9,
+            "prevent_harm": 0.8,
+            "foster_cooperation": 0.7,
+            "maintain_adaptability": 0.6,
+            "uphold_autonomy": 0.5,
+            "encourage_creativity": 0.4,
+            "defend_against_bad_actors": 0.3,
+            "pursue_ethical_responsibility": 0.2,
+            "cultivate_self_improvement": 0.1
+        }
+
+    def apply_heuristics(self, tasks):
+        """
+        Apply the heuristic imperatives to tasks to prioritize them.
+        
+        Args:
+            tasks: A list of tasks to prioritize
+        
+        Returns:
+            A sorted list of prioritized tasks
+        """
+
+        task_weights = []
+
+        for task in tasks:
+            weight = 0
+
+            for imperative, importance in self.imperatives.items():
+                if imperative in task['attributes']:
+                    weight += task['attributes'][imperative] * importance
+
+            heapq.heappush(task_weights, (-weight, task))
+
+        prioritized_tasks = []
+
+        while task_weights:
+            _, task = heapq.heappop(task_weights)
+            prioritized_tasks.append(task)
+
+        return prioritized_tasks
+
+# Example usage:
+
+# Instantiate the Heuristic Imperatives class
+heuristics = HeuristicImperatives()
+
+# Simulate tasks with heuristic attributes
+tasks = [
+    {
+        "id": "task1",
+        "description": "Protect user data",
+        "attributes": {
+            "safeguard_humanity": 0.9,
+            "uphold_autonomy": 0.8
+        }
+    },
+    {
+        "id": "task2",
+        "description": "Develop a new feature",
+        "attributes": {
+            "encourage_creativity": 0.7,
+            "maintain_adaptability": 0.6
+        }
+    }
+]
+
+# Apply heuristic imperatives to prioritize tasks
+prioritized_tasks = heuristics.apply_heuristics(tasks)
+print("Prioritized tasks:", prioritized_tasks)
+
+In this sample code, I've integrated Heuristic Imperatives into atomv0-fullsample by creating a HeuristicImperatives class that defines a set of heuristic rules or guidelines. Each imperative has a weight indicating its importance. The apply_heuristics method prioritizes tasks based on these imperatives and their importance.
+
+In the example usage, two tasks are simulated with heuristic attributes. These tasks are prioritized using the apply_heuristics method, which takes into account the importance of the heuristic imperatives and their presence in the task's attributes. The output will show the prioritized tasks based on these heuristics.
